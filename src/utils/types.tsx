@@ -1,8 +1,8 @@
 import type z from "zod";
-import { Control, FieldErrors } from "react-hook-form";
-import { TypedResponse } from "@remix-run/node";
-import { BasicFieldsSchemas, BasicSupportedFieldType } from "../config";
-import React from "react";
+import type { Control, FieldErrors } from "react-hook-form";
+import type { TypedResponse } from "@remix-run/node";
+import type { BasicFieldsSchemas, BasicSupportedFieldType } from "../config";
+import type React from "react";
 import type { useRemixForm } from "remix-hook-form";
 
 // Types for ensuring that field options we want to use have valid format
