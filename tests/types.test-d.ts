@@ -1,5 +1,5 @@
 import { expectType } from "tsd";
-import { AnyFormFieldsSchema, BaseFormFieldSchema, BaseFormFieldsSchema, FormFieldComponent, FormFieldsSchemas, OptionsForBasicType, OptionsForType, ValidatedFormBaseComponents, ValidatedFormComponents, type FormFieldOptions, type FormFieldSchema } from "../src/utils/types";
+import { AnyFormFieldsSchema, BaseFormFieldSchema, BaseFormFieldsSchema, FieldAdditionalValidators, FieldServerValidators, FormFieldComponent, FormFieldsSchemas, OptionsForBasicType, OptionsForType, OptionsTranslationConfigBase, OptionsTranslationConfigCustom, RecursiveOption, ValidatedFormBaseComponents, ValidatedFormComponents, type FormFieldOptions, type FormFieldSchema } from "../src/utils/types";
 import * as z from "zod";
 import type { BasicFieldsSchemas, BasicSupportedFieldType } from "../src/config";
 
@@ -1667,4 +1667,691 @@ test("Type FormFieldsSchemas works properly", () => {
     validation: z.string()
   })
 
+})
+
+test("Type RecursiveOption works properly", () => {
+
+  // Valid variants
+
+  // check if we can set to translation only these fields that are present in field options
+  // they should be always optional
+  // we try to check different supported structures
+  expectType<RecursiveOption<{ test: string }>>({ test: true })
+  expectType<RecursiveOption<{ test: string }>>({ })
+  expectType<RecursiveOption<{ test: string[] }>>({ test: true })
+  expectType<RecursiveOption<{ test: {
+    a: number,
+    b: string
+  } }>>({ test: {
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: string,
+    b: string
+  } }>>({ test: {
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: string,
+    b: string
+  } }>>({ test: {
+    a: true,
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: string,
+    b: string
+  }[] }>>({ test: {
+    a: true,
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: {
+      c: string,
+      d: string
+    },
+    b: string
+  } }>>({ test: {
+    a: {
+      c: true
+    },
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: {
+      c: string[]
+      d: string
+    },
+    b: string
+  } }>>({ test: {
+    a: {
+      c: true,
+      d: true
+    },
+    b: true  
+  }})
+
+  // Invalid variants
+
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: string }>>({ invalidOption: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: number }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: boolean }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: null }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: () => null }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: Date }>>({ test: new Date() })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: number[] }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: boolean[] }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: null[] }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: (() => null)[] }>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ test: Date[] }>>({ test: new Date() })
+  expectType<RecursiveOption<{ test: {
+    a: number,
+    b: string
+  } }>>({ test: {
+    // @ts-expect-error
+    c: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: number
+    b: string
+  } }>>({ test: {
+    // @ts-expect-error
+    a: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: number,
+    b: string
+  }[] }>>({ test: {
+    // @ts-expect-error
+    a: true,
+    b: true  
+  }})
+  expectType<RecursiveOption<{ test: {
+    b: string
+  }[] }>>({ test: {
+    b: true,
+    // @ts-expect-error
+    c: true
+  }})
+  expectType<RecursiveOption<{ test: {
+    a: {
+      c: number
+    },
+    b: string
+  } }>>({ test: {
+    a: {
+      // @ts-expect-error
+      c: true
+    },
+    b: true  
+  }})
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: string }}>>({ invalidOption: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: number }}>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: boolean }}>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: null }}>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: () => null }}>>({ test: true })
+  // @ts-expect-error
+  expectType<RecursiveOption<{ obj: { test: Date }}>>({ test: new Date() })
+
+})
+
+test("Type OptionsTranslationConfigBase works properly", () => {
+  
+  // Disclaimer: OptionsTranslationConfigBase is only small wrapper for `RecursiveOptions` that is used for every basic field type
+  // We check RecursiveOptions above, so here we should only check if possible options to translate indeed depend on field type
+
+  expectType<Pick<OptionsTranslationConfigBase, "text" | "password">>({
+    text: {
+      placeholder: true
+    },
+  })
+
+  expectType<Pick<OptionsTranslationConfigBase, "text" | "password">>({
+    text: {
+      // @ts-expect-error
+      invalidOption: true
+    },
+  })
+
+  expectType<Pick<OptionsTranslationConfigBase, "text" | "password">>({
+    // @ts-expect-error
+    invalidType: {},
+  })
+
+  test("Type OptionsTranslationConfigCustom works properly", () => {
+ 
+    // Disclaimer: OptionsTranslationConfigCustom is only small wrapper for `RecursiveOptions` that is used for every basic field type
+    // We check RecursiveOptions above, so here we should only check if possible options to translate indeed depend on field type
+    
+    expectType<OptionsTranslationConfigCustom<
+      "customTypeOne" | "customTypeTwo",
+      FormFieldsSchemas<
+        "customTypeOne" | "customTypeTwo",
+        string,
+        {
+          customTypeOne: {
+            options: {
+              test: string
+            }
+          },
+          customTypeTwo: {}
+        }
+      >>>({
+        customTypeOne: {
+          test: true
+        }
+      })
+  
+      expectType<OptionsTranslationConfigCustom<
+      "customTypeOne" | "customTypeTwo",
+      FormFieldsSchemas<
+        "customTypeOne" | "customTypeTwo",
+        string,
+        {
+          customTypeOne: {
+            options: {
+              test: string
+            }
+          },
+          customTypeTwo: {}
+        }
+      >>>({
+        // @ts-expect-error
+        customTypeTwo: {
+          test: true
+        }
+      })
+  
+      expectType<OptionsTranslationConfigCustom<
+      "customTypeOne" | "customTypeTwo",
+      FormFieldsSchemas<
+        "customTypeOne" | "customTypeTwo",
+        string,
+        {
+          customTypeOne: {
+            options: {
+              test: string
+            }
+          },
+          customTypeTwo: {}
+        }
+      >>>({
+        // @ts-expect-error
+        invalidType: {}
+      })
+  })
+
+})
+
+test("Type OptionsTranslationConfigCustom works properly", () => {
+ 
+  // Disclaimer: OptionsTranslationConfigCustom is only small wrapper for `RecursiveOptions` that is used for every basic field type
+  // We check RecursiveOptions above, so here we should only check if possible options to translate indeed depend on field type
+  
+  expectType<OptionsTranslationConfigCustom<
+    "customTypeOne" | "customTypeTwo",
+    FormFieldsSchemas<
+      "customTypeOne" | "customTypeTwo",
+      string,
+      {
+        customTypeOne: {
+          options: {
+            test: string
+          }
+        },
+        customTypeTwo: {}
+      }
+    >>>({
+      customTypeOne: {
+        test: true
+      }
+    })
+
+    expectType<OptionsTranslationConfigCustom<
+    "customTypeOne" | "customTypeTwo",
+    FormFieldsSchemas<
+      "customTypeOne" | "customTypeTwo",
+      string,
+      {
+        customTypeOne: {
+          options: {
+            test: string
+          }
+        },
+        customTypeTwo: {}
+      }
+    >>>({
+      // @ts-expect-error
+      customTypeTwo: {
+        test: true
+      }
+    })
+
+    expectType<OptionsTranslationConfigCustom<
+    "customTypeOne" | "customTypeTwo",
+    FormFieldsSchemas<
+      "customTypeOne" | "customTypeTwo",
+      string,
+      {
+        customTypeOne: {
+          options: {
+            test: string
+          }
+        },
+        customTypeTwo: {}
+      }
+    >>>({
+      // @ts-expect-error
+      invalidType: {}
+    })
+})
+
+test("Type FieldAdditionalValidators works properly", () => {
+
+  // Valid variants
+
+  // check if type allows adding validation func for supported fields
+  // check if this func has access to expected options and can return expected outcome
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null
+  })
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.placeholder === "" ? null : null,
+    password: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.role === "passwordRepeat" ? ({
+      path: ["text"],
+      message: "Error"
+    }) : null
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null,
+    customType: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.test ? null : {
+      path: ["customType", "text"],
+      message: "test"
+    }
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    "a" | "b",
+    FormFieldsSchemas<
+      "customType",
+      "a" | "b",
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null,
+    customType: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.test ? null : {
+      path: ["customType", "text"],
+      message: "a"
+    }
+  })
+
+  // Invalid variants
+
+  // check if TS will warn us while trying to use unsupported fields or use them incorrectly
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    invalidType: ({ schema, data, fieldName, value, options }) => null
+  })
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => options.invalidOption === "value" ? null : null
+  })
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => options.role === 22 ? null : null
+  })
+  expectType<FieldAdditionalValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => ({
+      path:["invalidType"],
+      message: "test"
+    })
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    invalidType: ({ schema, data, fieldName, value, options }) => null
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.invalidOption === "value" ? null : null
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.role === 22 ? null : null
+  })
+  expectType<FieldAdditionalValidators<
+    "text" | "customType",
+    "a" | "b",
+    FormFieldsSchemas<
+      "customType",
+      "a" | "b",
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.test === "test" ? { path: ["text"], message: "c" } : null
+  })
+})
+
+test("Type FieldServerValidators works properly", () => {
+
+  // Valid variants
+
+  // check if type allows adding validation func for supported fields
+  // check if this func has access to expected options and can return expected outcome
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null
+  })
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.placeholder === "" ? null : null,
+    password: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.role === "passwordRepeat" ? ({
+      path: ["text"],
+      message: "Error"
+    }) : null
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null,
+    customType: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.test ? null : {
+      path: ["customType", "text"],
+      message: "test"
+    }
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    "a" | "b",
+    FormFieldsSchemas<
+      "customType",
+      "a" | "b",
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    text: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => null,
+    customType: ({
+      schema,
+      data,
+      fieldName,
+      value,
+      options
+    }) => options.test ? null : {
+      path: ["customType", "text"],
+      message: "a"
+    }
+  })
+
+  // Invalid variants
+
+  // check if TS will warn us while trying to use unsupported fields or use them incorrectly
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    invalidType: ({ schema, data, fieldName, value, options }) => null
+  })
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => options.invalidOption === "value" ? null : null
+  })
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => options.role === 22 ? null : null
+  })
+  expectType<FieldServerValidators<"text" | "password", string>>({
+    // @ts-expect-error
+    text: ({ schema, data, fieldName, value, options }) => ({
+      path:["invalidType"],
+      message: "test"
+    })
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    invalidType: ({ schema, data, fieldName, value, options }) => null
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.invalidOption === "value" ? null : null
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    string,
+    FormFieldsSchemas<
+      "customType",
+      string,
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.role === 22 ? null : null
+  })
+  expectType<FieldServerValidators<
+    "text" | "customType",
+    "a" | "b",
+    FormFieldsSchemas<
+      "customType",
+      "a" | "b",
+      {
+        customType: {
+          options: {
+            test: string
+          }
+        }
+      }
+    >
+  >>({
+    // @ts-expect-error
+    customType: ({ schema, data, fieldName, value, options }) => options.test === "test" ? { path: ["text"], message: "c" } : null
+  })
 })

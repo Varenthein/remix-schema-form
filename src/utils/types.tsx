@@ -148,13 +148,6 @@ export type FormFieldsSchemas<CustomSupportedFieldType extends string, LangKey e
   [X in keyof T]: X extends string ? FormFieldSchema<X, LangKey, T[X]> : never
 }[keyof T] : never;
 
-// Type that converts form fields schema to desired validated object that is based on it
-export type SchemaToValidatedObj<
-  Schema extends Record<string, { validation: z.ZodTypeAny, conditioned?: (data: object) => Boolean }>
-> = { 
-  [K in keyof Schema]: Schema[K]["conditioned"] extends object ? z.infer<Schema[K]["validation"]> | undefined : z.infer<Schema[K]["validation"]>
-}
-
 // Type that converts form fields schema to desired zod validation object
 export type SchemaToZodObj<
   Schema extends Record<string, { validation: z.ZodTypeAny, conditioned?: (data: object) => Boolean }>
@@ -192,7 +185,7 @@ export type CleanUpFunc = (data: Record<string, any>) => Promise<void>;
 export type FileRemoveFunc = (name: string) => Promise<void>;
 
 // Types for options translation conf object (separately for basic and custom fields)
-type RecursiveOption<Option> = Option extends object 
+export type RecursiveOption<Option> = Option extends object 
   ? Option extends Array<infer T>
     ? T extends object
       ? RecursiveOption<T>
@@ -201,7 +194,9 @@ type RecursiveOption<Option> = Option extends object
         : never
     : Option extends Date
       ? never
-      : { [L in keyof Option]?: RecursiveOption<Option[L]>}
+      : Option extends Function
+        ? never
+        : { [L in keyof Option]?: RecursiveOption<Option[L]>}
   : Option extends string
     ? true
     : never
@@ -240,7 +235,7 @@ export type FieldAdditionalValidators<
     value: any,
     options: OptionsForType<X, CustomFormFieldSchema>
   }) => {
-    path: (keyof AnyFormFieldsSchema)[],
+    path: SupportedFieldType[],
     message: LangKey
   } | null
 }
@@ -272,7 +267,7 @@ export type FieldServerValidators<
     value: any,
     options: OptionsForType<X, CustomFormFieldSchema>
   }) => {
-    path: (keyof AnyFormFieldsSchema)[],
+    path: SupportedFieldType[],
     message: LangKey
   } | null
 }
