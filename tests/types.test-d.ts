@@ -369,8 +369,8 @@ test("Type FormFieldsSchema works properly", () => {
     label: "a",
     type: "testType" as const,
     validation: z.number(),
-    // @ts-expect-error
   }).toMatchTypeOf<
+    // @ts-expect-error
     FormFieldSchema<
       "testType",
       string,
@@ -389,8 +389,8 @@ test("Type FormFieldsSchema works properly", () => {
     options: {
       bar: "test",
     },
-    // @ts-expect-error
   }).toMatchTypeOf<
+    // @ts-expect-error
     FormFieldSchema<
       "testType",
       string,
@@ -409,8 +409,8 @@ test("Type FormFieldsSchema works properly", () => {
     options: {
       foo: 2,
     },
-    // @ts-expect-error
   }).toMatchTypeOf<
+    // @ts-expect-error
     FormFieldSchema<
       "testType",
       string,
@@ -725,10 +725,10 @@ test("Type BaseFormFieldSchema works properly", () => {
           options: {
             testOpt: number;
           };
-          // @ts-expect-error
         }
       >
     >
+    // @ts-expect-error
   >({
     type: "custom",
     label: "test",
@@ -1292,9 +1292,7 @@ test("Type OptionsForType works properly", () => {
   expectType<OptionsForType<"text">>({ invalid: true });
 
   // @ts-expect-error
-  expectType<OptionsForType<"invalidType", FormFieldSchema<"custom", string>>>(
-    {}
-  );
+  expectType<OptionsForType<"invalidType", FormFieldSchema<"custom", string>>>({});
 
   expectType<
     OptionsForType<
@@ -1306,10 +1304,10 @@ test("Type OptionsForType works properly", () => {
           options: {
             test: number;
           };
-          // @ts-expect-error
         }
       >
     >
+    // @ts-expect-error
   >({ test: "abc" });
 
   expectType<
@@ -1322,10 +1320,10 @@ test("Type OptionsForType works properly", () => {
           options: {
             test: number;
           };
-          // @ts-expect-error
         }
       >
     >
+    // @ts-expect-error
   >({});
 });
 
@@ -1393,36 +1391,36 @@ test("Type ValidatedFormBaseComponents works properly", () => {
 
   // check if the TS raises error when param for field or submitBtn/message is missing
 
-  // @ts-expect-error
   expectType<
     Pick<
       ValidatedFormBaseComponents,
       "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     text: (args: any) => null,
     message: (args: any) => null,
     submitBtn: (args) => null,
   });
 
-  // @ts-expect-error
   expectType<
     Pick<
       ValidatedFormBaseComponents,
       "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     text: (args: any) => null,
     password: (args: any) => null,
     submitBtn: (args) => null,
   });
 
-  // @ts-expect-error
   expectType<
     Pick<
       ValidatedFormBaseComponents,
       "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     text: (args: any) => null,
     password: (args: any) => null,
@@ -1451,8 +1449,8 @@ test("Type ValidatedFormBaseComponents works properly", () => {
     ({
       options: {
         role,
-        // @ts-expect-error
       },
+     // @ts-expect-error
     }) => (role === "invalidValue" ? null : null)
   );
   expectType<ValidatedFormBaseComponents["text"]>(
@@ -1640,10 +1638,10 @@ test("Type ValidatedFormComponents works properly", () => {
       ValidatedFormComponents<
         { customType: any },
         { customType: FormFieldSchema<"customType", string, void> }
-        // @ts-expect-error
       >,
       "customType" | "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     text: (args: any) => null,
     message: (args: any) => null,
@@ -1655,10 +1653,10 @@ test("Type ValidatedFormComponents works properly", () => {
       ValidatedFormComponents<
         { customType: any },
         { customType: FormFieldSchema<"customType", string, void> }
-        // @ts-expect-error
       >,
       "customType" | "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     text: (args: any) => null,
     password: (args: any) => null,
@@ -1671,10 +1669,10 @@ test("Type ValidatedFormComponents works properly", () => {
       ValidatedFormComponents<
         { customType: any },
         { customType: FormFieldSchema<"customType", string, void> }
-        // @ts-expect-error
       >,
       "customType" | "text" | "password" | "message" | "submitBtn"
     >
+  // @ts-expect-error
   >({
     password: (args: any) => null,
     customType: (args: any) => null,
@@ -1719,8 +1717,8 @@ test("Type ValidatedFormComponents works properly", () => {
     ({
       options: {
         role,
-        // @ts-expect-error
       },
+    // @ts-expect-error
     }) => (role === "invalidValue" ? null : null)
   );
   expectType<
@@ -1742,8 +1740,8 @@ test("Type ValidatedFormComponents works properly", () => {
     ({
       options: {
         validOption,
-        // @ts-expect-error
       },
+      // @ts-expect-error
     }) => (validOption === "invalidValue" ? null : null)
   );
   expectType<
@@ -2029,9 +2027,9 @@ test("Type FormFieldsSchemas works properly", () => {
           };
         };
         customTypeTwo: {};
-        // @ts-expect-error
       }
     >
+  // @ts-expect-error
   >({
     label: "test",
     type: "customType",
@@ -2250,8 +2248,8 @@ test("Type RecursiveOption works properly", () => {
       b: true,
     },
   });
-  // @ts-expect-error
   expectType<RecursiveOption<{ obj: { test: string } }>>({
+    // @ts-expect-error
     invalidOption: true,
   });
   // @ts-expect-error
@@ -2511,17 +2509,16 @@ test("Type FieldAdditionalValidators works properly", () => {
     invalidType: ({ schema, data, fieldName, value, options }) => null,
   });
   expectType<FieldAdditionalValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.invalidOption === "value" ? null : null,
   });
   expectType<FieldAdditionalValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.role === 22 ? null : null,
   });
   expectType<FieldAdditionalValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) => ({
       path: ["invalidType"],
       message: "test",
@@ -2564,8 +2561,8 @@ test("Type FieldAdditionalValidators works properly", () => {
       >
     >
   >({
-    // @ts-expect-error
     customType: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.invalidOption === "value" ? null : null,
   });
   expectType<
@@ -2585,8 +2582,8 @@ test("Type FieldAdditionalValidators works properly", () => {
       >
     >
   >({
-    // @ts-expect-error
     customType: ({ schema, data, fieldName, value, options }) =>
+       // @ts-expect-error
       options.role === 22 ? null : null,
   });
   expectType<
@@ -2692,17 +2689,16 @@ test("Type FieldServerValidators works properly", () => {
     invalidType: ({ schema, data, fieldName, value, options }) => null,
   });
   expectType<FieldServerValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.invalidOption === "value" ? null : null,
   });
   expectType<FieldServerValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.role === 22 ? null : null,
   });
   expectType<FieldServerValidators<"text" | "password", string>>({
-    // @ts-expect-error
     text: ({ schema, data, fieldName, value, options }) => ({
       path: ["invalidType"],
       message: "test",
@@ -2745,8 +2741,8 @@ test("Type FieldServerValidators works properly", () => {
       >
     >
   >({
-    // @ts-expect-error
     customType: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.invalidOption === "value" ? null : null,
   });
   expectType<
@@ -2766,8 +2762,8 @@ test("Type FieldServerValidators works properly", () => {
       >
     >
   >({
-    // @ts-expect-error
     customType: ({ schema, data, fieldName, value, options }) =>
+      // @ts-expect-error
       options.role === 22 ? null : null,
   });
   expectType<
