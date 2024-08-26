@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { zfd } from "zod-form-data";
 
-function zNumber(options?: {
+function zNumber(options: {
   required: true;
   min?: number;
   max?: number;

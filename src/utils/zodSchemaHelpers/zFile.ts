@@ -67,11 +67,11 @@ export type MimeType =
   | "application/x-7z-compressed"
   | (string & {});
 
-function zFile(options?: {
+function zFile(options: {
   required: true;
   accept?: MimeType[];
   maxSize?: number;
-}): z.ZodEffects<z.ZodType<File>>;
+}): z.ZodEffects<z.ZodType<File>>
 function zFile(options?: {
   required?: Boolean;
   accept?: MimeType[];
@@ -79,19 +79,19 @@ function zFile(options?: {
 }): z.ZodUnion<
   [
     z.ZodType<undefined, z.ZodTypeDef, undefined>,
-    z.ZodEffects<z.ZodEffects<z.ZodType<File>>>
+    z.ZodEffects<z.ZodEffects<z.ZodType<File | undefined>>>
   ]
->;
+>
 function zFile(options?: {
   required?: Boolean;
   accept?: MimeType[];
   maxSize?: number;
 }):
-  | z.ZodEffects<z.ZodType<File | File[]>>
+  | z.ZodEffects<z.ZodType<File | File[] | undefined>>
   | z.ZodUnion<
       [
         z.ZodType<undefined, z.ZodTypeDef, undefined>,
-        z.ZodEffects<z.ZodEffects<z.ZodType<File[] | File>>>
+        z.ZodEffects<z.ZodEffects<z.ZodType<File[] | File | undefined>>>
       ]
     > {
   if (options && options.required)
@@ -103,6 +103,7 @@ function zFile(options?: {
           !files.length ||
           !options ||
           typeof options.maxSize === "undefined" ||
+          !files[0] ||
           files[0].size <= options.maxSize,
         options.maxSize
           ? `fileIsTooBig|max=${options.maxSize / 1024 / 1024}`
@@ -113,6 +114,7 @@ function zFile(options?: {
           !files.length ||
           !options ||
           typeof options.accept === "undefined" ||
+          !files[0] ||
           options.accept.includes(files[0].type),
         options.accept
           ? `unsupportedFormat|formats=${options.accept
@@ -136,6 +138,7 @@ function zFile(options?: {
             !files.length ||
             !options ||
             typeof options.maxSize === "undefined" ||
+            !files[0] ||
             files[0].size <= options.maxSize,
           options?.maxSize
             ? `fileIsTooBig|max=${options.maxSize / 1024 / 1024}`
@@ -146,6 +149,7 @@ function zFile(options?: {
             !files.length ||
             !options ||
             typeof options.accept === "undefined" ||
+            !files[0] ||
             options.accept.includes(files[0].type),
           options?.accept
             ? `unsupportedFormat|formats=${options.accept

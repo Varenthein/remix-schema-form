@@ -2,7 +2,7 @@ import * as z from "zod";
 import { isFilesArray } from "../isFilesArray";
 import { MimeType } from "./zFile";
 
-function zFiles(options?: {
+function zFiles(options: {
   minAmount: number;
   maxAmount?: number;
   accept?: MimeType[];

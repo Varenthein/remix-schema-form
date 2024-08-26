@@ -220,7 +220,7 @@ export type SchemaToZodObj<
 // Type for custom getFormData function
 export type GetFormDataFunc = <
   Schema extends AnyFormFieldsSchema,
-  Conditionals extends AnySchemaConditionals
+  Conditionals extends AnySchemaConditionals | undefined
 >(
   request: Request,
   schema: Schema,
@@ -370,7 +370,7 @@ export type FieldAdditionalValidators<
     value: any;
     options: OptionsForType<X, CustomFormFieldSchema>;
   }) => {
-    path: SupportedFieldType[];
+    path: (keyof AnyFormFieldsSchema)[];
     message: LangKey;
   } | null;
 };
@@ -402,7 +402,7 @@ export type FieldServerValidators<
     value: any;
     options: OptionsForType<X, CustomFormFieldSchema>;
   }) => {
-    path: SupportedFieldType[];
+    path: (keyof AnyFormFieldsSchema)[];
     message: LangKey;
   } | null;
 };

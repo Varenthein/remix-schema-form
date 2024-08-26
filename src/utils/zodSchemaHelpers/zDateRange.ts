@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { zDate } from "./zDate";
 
-function zDateRange(options?: {
+function zDateRange(options: {
   required: true;
   minDate?: Date;
   maxDate?: Date;
