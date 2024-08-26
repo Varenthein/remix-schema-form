@@ -26,6 +26,7 @@ import { runAdditionalZodValidations } from "./utils/runAdditionalZodValidations
 import { schemaHasConditionalFields } from "./utils/schemaHasConditionalFields";
 import { enhanceSchemaWithConditionals } from "./utils/enhanceSchemaWithConditionals";
 import { capitalize } from "./utils/capitalize";
+import { defaultTranslateFunc } from "./utils/defaultTranslateFunc";
 
 export const ValidatedFormBase = ({
   schema: plainSchema,
@@ -35,7 +36,7 @@ export const ValidatedFormBase = ({
   successMessage,
   defaultValues,
   submitActionName,
-  translateFunc = (s: string) => s,
+  translateFunc = defaultTranslateFunc,
   scrollTopAfterSuccess,
   customFieldsTranslationConfig,
   customAdditionalValidators,
