@@ -1,5 +1,5 @@
 import { expectType } from "tsd";
-import { AnyFormFieldsSchema, BaseFormFieldSchema, BaseFormFieldsSchema, FieldAdditionalValidators, FieldServerValidators, FormFieldComponent, FormFieldsSchemas, OptionsForBasicType, OptionsForType, OptionsTranslationConfigBase, OptionsTranslationConfigCustom, RecursiveOption, ValidatedFormBaseComponents, ValidatedFormComponents, type FormFieldOptions, type FormFieldSchema } from "../src/utils/types";
+import { AnyFormFieldsSchema, BaseFormFieldSchema, BaseFormFieldsSchema, FieldAdditionalValidators, FieldServerValidators, FormFieldComponent, FormFieldsSchemas, OptionsForBasicType, OptionsForType, OptionsTranslationConfigBase, OptionsTranslationConfigCustom, RecursiveOption, ValidatedFormBaseComponents, ValidatedFormComponents, ValidatedFormFieldsComponentsObj, type FormFieldOptions, type FormFieldSchema } from "../src/utils/types";
 import * as z from "zod";
 import type { BasicFieldsSchemas, BasicSupportedFieldType } from "../src/config";
 
@@ -2354,4 +2354,44 @@ test("Type FieldServerValidators works properly", () => {
     // @ts-expect-error
     customType: ({ schema, data, fieldName, value, options }) => options.test === "test" ? { path: ["text"], message: "c" } : null
   })
+})
+
+test("Type ValidatedFormFieldsComponentsObj work properly", () => {
+
+  // check if we can set only components for existing types and we are required to do it
+  
+  const exampleSchema = {
+    test: {
+      label: "test",
+      type: "text",
+      validation: z.string()
+    },
+    testTwo: {
+      label: "test",
+      type: "password",
+      validation: z.string()
+    }
+  } satisfies BaseFormFieldsSchema<string>
+
+  expectType<ValidatedFormFieldsComponentsObj<typeof exampleSchema>>({
+    test: ({ className }) => null,
+    testTwo: ({ className }) => null,
+  })
+
+  // @ts-expect-error
+  expectType<ValidatedFormFieldsComponentsObj<typeof exampleSchema>>({
+    test: ({ className }) => null,
+  })
+
+  expectType<ValidatedFormFieldsComponentsObj<typeof exampleSchema>>({
+    test: ({ className }) => null,
+    // @ts-expect-error
+    invalidType: ({ className }) => null,
+  })
+
+  expectType<ValidatedFormFieldsComponentsObj<typeof exampleSchema>>({
+    // @ts-expect-error
+    invalidType: ({ className }) => null,
+  })
+
 })
