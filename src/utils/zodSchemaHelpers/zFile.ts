@@ -71,7 +71,7 @@ function zFile(options: {
   required: true;
   accept?: MimeType[];
   maxSize?: number;
-}): z.ZodEffects<z.ZodType<File>>
+}): z.ZodEffects<z.ZodType<File>>;
 function zFile(options?: {
   required?: Boolean;
   accept?: MimeType[];
@@ -81,7 +81,7 @@ function zFile(options?: {
     z.ZodType<undefined, z.ZodTypeDef, undefined>,
     z.ZodEffects<z.ZodEffects<z.ZodType<File | undefined>>>
   ]
->
+>;
 function zFile(options?: {
   required?: Boolean;
   accept?: MimeType[];

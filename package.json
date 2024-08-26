@@ -1,7 +1,7 @@
 {
   "name": "remix-schema-form",
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -11,6 +11,9 @@
     "test": "vitest",
     "test:types": "vitest --typecheck",
     "coverage": "vitest run --coverage"
+  },
+  "repository": {
+    "url": "https://github.com/Varenthein/remix-schema-form"
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
