@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-getresponse-api",
+  "name": "remix-schema-form",
   "license": "MIT",
   "version": "0.0.1",
   "main": "dist/index.js",
@@ -9,34 +9,44 @@
     "build": "tsup index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "test": "vitest",
+    "test:types": "vitest --typecheck",
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",
+    "@hookform/resolvers": "^3.9.0",
+    "@remix-run/node": "^2.11.2",
     "@remix-run/react": "^2.11.2",
+    "@testing-library/react": "^16.0.0",
+    "@types/invariant": "^2.2.37",
+    "@types/react": "^18.3.4",
     "@vitejs/plugin-react": "^4.3.1",
     "happy-dom": "^14.12.3",
+    "invariant": "^2.2.4",
+    "libphonenumber-js": "^1.11.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
     "remix-hook-form": "^5.0.4",
     "rollup-plugin-typescript2": "^0.36.0",
+    "tsd": "^0.31.1",
     "tsup": "^8.1.2",
     "typescript": "^5.5.3",
     "vite": "^5.4.2",
     "vite-tsconfig-paths": "^5.0.1",
     "vitest": "^2.0.4",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.2"
   },
   "peerDependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@remix-run/react": "^2.11.2",
+    "libphonenumber-js": "^1.11.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.51.0",
     "remix-hook-form": "^5.0.4",
-    "zod": "^3.23.8"
-  },
-  "dependencies": {
-    "tsd": "^0.31.1"
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.2"
   }
 }
