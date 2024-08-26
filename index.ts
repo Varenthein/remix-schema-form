@@ -24,7 +24,8 @@ import { zSelect } from "./src/utils/zodSchemaHelpers/zSelect";
 import { zSelectOptional } from "./src/utils/zodSchemaHelpers/zSelectOptional";
 import { zSwitch } from "./src/utils/zodSchemaHelpers/zSwitch";
 import { zText } from "./src/utils/zodSchemaHelpers/zText";
-
+import { SchemaConditionals } from "./src/utils/types";
+import { OptionsForBasicType } from "./src/utils/types";
 export {
   ValidatedFormBase,
   getFormDataBase,
@@ -49,5 +50,7 @@ export {
   zSelect,
   zSelectOptional,
   zSwitch,
-  zText
+  zText,
+  SchemaConditionals,
+  OptionsForBasicType 
 };
