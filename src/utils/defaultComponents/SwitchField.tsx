@@ -1,8 +1,8 @@
 import { DefaultFormFieldComponentBaseProps } from "../types";
 import styles from "./SwitchField.module.css";
+import fieldStyles from "./InputField.module.css";
 
 export const SwitchField = ({
-  className,
   label,
   description,
   options,
@@ -14,9 +14,9 @@ export const SwitchField = ({
   ...props
 }: DefaultFormFieldComponentBaseProps) => {
   return (
-    <div className={className}>
+    <div className={fieldStyles.field}>
       <label>
-        {label}
+        <span className={fieldStyles.label}>{label}</span>
         <div className={styles.switch}>
           <input
             type="checkbox"
@@ -27,8 +27,8 @@ export const SwitchField = ({
             {...register(fieldName)}
           />
         </div>
-        {description && <div>{description}</div>}
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        {description && <div className={fieldStyles.description}>{description}</div>}
+        {error && <div className={fieldStyles.error}>{error}</div>}
       </label>
     </div>
   );

@@ -1,4 +1,5 @@
 import { DefaultFormFieldComponentBaseProps } from "../types";
+import styles from "./SwitchField.module.css";
 
 export const TextareaField = ({
   className,
@@ -10,15 +11,15 @@ export const TextareaField = ({
   register,
   required,
   disabled,
-  ...props
 }: DefaultFormFieldComponentBaseProps) => {
   const safeOptions = typeof options === "object" ? options : null;
 
   return (
-    <div className={className}>
+    <div className={styles.field}>
       <label>
-        {label}
+        <span className={styles.label}>{label}</span>
         <textarea
+          className={styles.input}
           placeholder={
             safeOptions &&
             "placeholder" in safeOptions &&
@@ -29,11 +30,10 @@ export const TextareaField = ({
           style={error ? { border: "1px solid red" } : {}}
           disabled={disabled}
           required={required}
-          {...props}
           {...register(fieldName)}
         />
-        {description && <div>{description}</div>}
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        {description && <div className={styles.description}>{description}</div>}
+        {error && <div className={styles.error}>{error}</div>}
       </label>
     </div>
   );

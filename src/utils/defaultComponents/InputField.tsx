@@ -1,7 +1,7 @@
 import { DefaultFormFieldComponentBaseProps } from "../types";
+import styles from "./InputField.module.css";
 
 export const InputField = ({
-  className,
   label,
   description,
   options,
@@ -11,17 +11,27 @@ export const InputField = ({
   required,
   disabled,
   type,
-  ...props
 }: DefaultFormFieldComponentBaseProps & {
-  type: "checkbox" | "number" | "search" | "text" | "email" | "tel" | "url" | "password" | "file";
+  type:
+    | "checkbox"
+    | "number"
+    | "search"
+    | "text"
+    | "email"
+    | "tel"
+    | "url"
+    | "password"
+    | "file";
 } & Record<string, any>) => {
   const safeOptions = typeof options === "object" ? options : null;
 
   return (
-    <div className={className}>
+    <div className={styles.field}>
       <label>
-        {label}
+        <span className={styles.label}>{label}</span>
         <input
+          type={type}
+          className={styles.input}
           placeholder={
             safeOptions &&
             "placeholder" in safeOptions &&
@@ -32,11 +42,10 @@ export const InputField = ({
           style={error ? { border: "1px solid red" } : {}}
           disabled={disabled}
           required={required}
-          {...props}
           {...register(fieldName)}
         />
-        {description && <div>{description}</div>}
-        {error && <div style={{ color: "red" }}>{error}</div>}
+        {description && <div className={styles.description}>{description}</div>}
+        {error && <div className={styles.error}>{error}</div>}
       </label>
     </div>
   );

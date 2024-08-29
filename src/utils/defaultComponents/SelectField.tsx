@@ -2,9 +2,9 @@ import {
   DefaultFormFieldComponentBaseProps,
   OptionsForBasicType,
 } from "../types";
+import styles from "./InputField.module.css";
 
 export const SelectField = ({
-  className,
   label,
   description,
   options,
@@ -16,10 +16,11 @@ export const SelectField = ({
 }: Omit<DefaultFormFieldComponentBaseProps, "Component"> & {
   options: OptionsForBasicType<"select">;
 }) => (
-  <div className={className}>
+  <div className={styles.field}>
     <label>
-      {label}
+      <span className={styles.label}>{label}</span>
       <select
+        className={styles.input}
         disabled={disabled}
         style={error ? { border: "1px solid red" } : {}}
         required={required}
@@ -31,8 +32,8 @@ export const SelectField = ({
           </option>
         ))}
       </select>
-      {description && <div>{description}</div>}
-      {error && <div style={{ color: "red" }}>{error}</div>}
+      {description && <div className={styles.description}>{description}</div>}
+      {error && <div className={styles.error}>{error}</div>}
     </label>
   </div>
 );
