@@ -474,3 +474,19 @@ export type SchemaWithOptionalConditionals<Schema extends AnyFormFieldsSchema> =
       conditioned?: (data: object) => Boolean;
     };
   };
+
+// Type for default component base props
+export type DefaultFormFieldComponentBaseProps = {
+  className?: string,
+  label?: string,
+  description?: string,
+  options?: Record<string, any> | unknown
+  error?: string | null
+  fieldName: string,
+  register: (args: any) => object,
+  required?: boolean,
+  disabled?: boolean,
+  control: Control<{
+    [x: string]: any;
+  }, any>
+}

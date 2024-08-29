@@ -19,6 +19,7 @@ import { prepareValidationError } from "./utils/prepareValidationError";
 import {
   additionalZodValidatorsForBasicFields,
   basicFieldsTranslationsConfig,
+  defaultComponents,
 } from "./config";
 import { translateFormFieldsOptions } from "./utils/translateFormFieldOptions";
 import { FormEvent, useEffect, useMemo } from "react";
@@ -31,7 +32,7 @@ import { defaultTranslateFunc } from "./utils/defaultTranslateFunc";
 export const ValidatedFormBase = ({
   schema: plainSchema,
   schemaConditionals,
-  components,
+  components = defaultComponents,
   action,
   successMessage,
   defaultValues,
