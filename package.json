@@ -1,12 +1,12 @@
 {
   "name": "remix-schema-form",
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.84",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup index.ts --format cjs,esm --dts",
+    "build": "tsup index.ts server/index.ts --format cjs,esm --dts",
     "lint": "tsc",
     "test": "vitest",
     "test:types": "vitest --typecheck",
@@ -42,14 +42,14 @@
     "zod-form-data": "^2.0.2"
   },
   "peerDependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "@remix-run/react": "^2.11.2",
-    "libphonenumber-js": "^1.11.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.51.0",
-    "remix-hook-form": "^5.0.4",
-    "zod": "^3.23.8",
-    "zod-form-data": "^2.0.2"
+    "@hookform/resolvers": ">= 3.9.0",
+    "@remix-run/react": ">= 2.11.2",
+    "libphonenumber-js": ">= 1.11.7",
+    "react": ">= 18.3.1",
+    "react-dom": ">= 18.3.1",
+    "react-hook-form": ">= 7.51.0",
+    "remix-hook-form": ">= 5.0.4",
+    "zod": ">= 3.23.8",
+    "zod-form-data": ">= 2.0.2"
   }
 }

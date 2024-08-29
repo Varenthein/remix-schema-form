@@ -6,7 +6,7 @@ import {
   CleanUpFunc,
   FileRemoveFunc,
 } from "./utils/types";
-import { zodResolver } from "@hookform/resolvers/zod/dist";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { createValidatorFromSchema } from "./utils/createValidatorFromSchema";
 import { FieldErrors } from "react-hook-form";

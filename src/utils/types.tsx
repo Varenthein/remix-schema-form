@@ -68,7 +68,7 @@ export type BaseFormFieldSchema<
 // Type for the whole form fields schema that supports basic field types
 // It supports also custom fields (if they present as type variable)
 export type BaseFormFieldsSchema<
-  LangKey extends string,
+  LangKey extends string = string,
   CustomFormFieldSchema = void
 > = Record<string, BaseFormFieldSchema<LangKey, CustomFormFieldSchema>>;
 

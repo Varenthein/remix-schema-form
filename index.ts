@@ -1,4 +1,3 @@
-import { getFormDataBase } from "./src/getFormDataBase.server";
 import { ValidatedFormBase } from "./src/ValidatedFormBase";
 import {
   AnyFormFieldsSchema,
@@ -29,7 +28,6 @@ import { OptionsForBasicType } from "./src/utils/types";
 
 export {
   ValidatedFormBase,
-  getFormDataBase,
   GetFormDataFunc,
   FormFieldsSchemas,
   BaseFormFieldsSchema,

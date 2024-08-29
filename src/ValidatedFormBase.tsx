@@ -12,14 +12,13 @@ import type {
 } from "./utils/types";
 import { createValidatorFromSchema } from "./utils/createValidatorFromSchema";
 import { Form, useActionData } from "@remix-run/react";
-import { zodResolver } from "@hookform/resolvers/zod/dist";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRemixForm } from "remix-hook-form";
 import { z } from "zod";
 import { prepareValidationError } from "./utils/prepareValidationError";
 import {
   additionalZodValidatorsForBasicFields,
   basicFieldsTranslationsConfig,
-  defaultComponents,
 } from "./config";
 import { translateFormFieldsOptions } from "./utils/translateFormFieldOptions";
 import { FormEvent, useEffect, useMemo } from "react";
@@ -28,6 +27,7 @@ import { schemaHasConditionalFields } from "./utils/schemaHasConditionalFields";
 import { enhanceSchemaWithConditionals } from "./utils/enhanceSchemaWithConditionals";
 import { capitalize } from "./utils/capitalize";
 import { defaultTranslateFunc } from "./utils/defaultTranslateFunc";
+import { defaultComponents } from "./utils/defaultComponents";
 
 export const ValidatedFormBase = ({
   schema: plainSchema,
@@ -47,7 +47,7 @@ export const ValidatedFormBase = ({
 }: {
   schema: AnyFormFieldsSchema;
   schemaConditionals?: AnySchemaConditionals;
-  components: ValidatedFormBaseComponents;
+  components?: ValidatedFormBaseComponents;
   submitActionName: string;
   mode?: "onChange" | "onBlur" | "onSubmit" | "onTouched" | "all";
   translateFunc?: TranslateFunc;
