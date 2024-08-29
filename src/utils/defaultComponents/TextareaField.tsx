@@ -32,8 +32,8 @@ export const TextareaField = ({
           {...props}
           {...register(fieldName)}
         />
-        {description && <span>{description}</span>}
-        {error && <span style={{ color: "red" }}>{error}</span>}
+        {description && <div>{description}</div>}
+        {error && <div style={{ color: "red" }}>{error}</div>}
       </label>
     </div>
   );

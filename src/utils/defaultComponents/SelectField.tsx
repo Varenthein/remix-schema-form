@@ -31,8 +31,8 @@ export const SelectField = ({
           </option>
         ))}
       </select>
-      {description && <span>{description}</span>}
-      {error && <span style={{ color: "red" }}>{error}</span>}
+      {description && <div>{description}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
     </label>
   </div>
 );
