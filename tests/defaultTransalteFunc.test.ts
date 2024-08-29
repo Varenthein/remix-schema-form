@@ -15,5 +15,6 @@ test("defaultTranslateFunc works properly", () => {
   expect(defaultTranslateFunc("notInRange", { min: "2", max: "4" })).toEqual("Not in range (min 2 - max: 4)");
   expect(defaultTranslateFunc("notInRange", { min: "2", max: "4" })).toEqual("Not in range (min 2 - max: 4)");
   expect(defaultTranslateFunc("notInRange", { max: "4" })).toEqual("Not in range (min {{min}} - max: 4)");
-  expect(defaultTranslateFunc("invalidKey")).toEqual("");
+  expect(defaultTranslateFunc("invalidKey")).toEqual("invalidKey");
+  expect(defaultTranslateFunc("Other key")).toEqual("Other key");
 })
