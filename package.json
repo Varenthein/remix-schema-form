@@ -1,7 +1,7 @@
 {
   "name": "remix-schema-form",
   "license": "MIT",
-  "version": "0.0.89",
+  "version": "0.0.93",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -44,7 +44,6 @@
   "peerDependencies": {
     "@hookform/resolvers": ">= 3.9.0",
     "@remix-run/react": ">= 2.11.2",
-    "libphonenumber-js": ">= 1.11.7",
     "react": ">= 18.3.1",
     "react-dom": ">= 18.3.1",
     "react-hook-form": ">= 7.51.0",

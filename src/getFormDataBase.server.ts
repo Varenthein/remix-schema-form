@@ -36,7 +36,7 @@ import { enhanceSchemaWithConditionals } from "./utils/enhanceSchemaWithConditio
  */
 export async function getFormDataBase<
   Schema extends AnyFormFieldsSchema,
-  Conditionals extends AnySchemaConditionals | undefined
+  Conditionals extends AnySchemaConditionals | undefined = undefined
 >(
   request: Request,
   plainSchema: Schema,

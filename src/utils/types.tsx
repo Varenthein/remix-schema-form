@@ -115,7 +115,7 @@ export type FormFieldComponent<
   required?: boolean;
   disabled?: boolean;
   className?: string;
-  control: Control<
+  control?: Control<
     {
       [x: string]: any;
     },
