@@ -141,14 +141,14 @@ The package lets us define component for each supported field type and two speci
 Thankfully there is no much work to do and we can easily integrate UI components from any chosen library.
 
 Form field components are always rendered with at least props below:
-– label: `string` (defaults to empty string)
-– description: `string` (defaults to empty string)
-– error: `string` or `null`
-– required: `boolean`
-– disabled: `boolean`
-– control
-– fieldName 
-– register
+- label: `string` (defaults to empty string)
+- description: `string` (defaults to empty string)
+- error: `string` or `null`
+- required: `boolean`
+- disabled: `boolean`
+- control
+- fieldName 
+- register
 
 `label`, `description`, `required` or `disabled` are simply picked up from the schema and can be used by component to properly describe and style the field.
 
@@ -277,9 +277,9 @@ Button component will receive:
 `children` for now is basically "submitAction" prop value that we provide to `ValidatedFormBase`. `type` is currently always the "submit" one (it can be expanded in the future). `isSubmitting` informs us if form is currently in submitting state and can be used for displaying some kind of spinner.
 
 Alert component will receive:
-– variant: `"error" | "success"`
-– items: `string[]` (if error) | `undefined`
-– children: React.ReactNode (if success)
+- variant: `"error" | "success"`
+- items: `string[]` (if error) | `undefined`
+- children: React.ReactNode (if success)
 
 `items` is present only at `error` variant and is simply array of errors messages.
 
@@ -368,16 +368,16 @@ export const TextField = ({
 Remix-schema forms comes up with some pre-built field types.
 
 There are:
-– text
-– password
-– textarea
-– select
-– switch
-– checkbox
-– number
-– file
-– files
-– date
+- text
+- password
+- textarea
+- select
+- switch
+- checkbox
+- number
+- file
+- files
+- date
 
 That's quite a few, but often not enough. Therefore the package allows for adding our own.
 
