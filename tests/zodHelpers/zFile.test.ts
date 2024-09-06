@@ -4,7 +4,7 @@ import { zFile } from "../../src/utils/zodSchemaHelpers/zFile";
 import { createDummyFileList } from "../utils/createDummyFileList";
 
 const exampleFileList = createDummyFileList([
-  { name: "test.html", type: "text.html" },
+  { name: "test.html", type: "text/html" },
 ]);
 
 test("should properly parse valid input data (no options)", () => {
